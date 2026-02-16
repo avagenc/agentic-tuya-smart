@@ -54,7 +54,7 @@ jobs:
           service: ${{ env.SERVICE_NAME }}
           image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           region: ${{ env.REGION }}
-          flags: "--allow-unauthenticated --memory=128Mi --cpu=1 --min-instances=0 --max-instances=1 --cpu-boost"
+          flags: "--no-allow-unauthenticated --memory=128Mi --cpu=1 --min-instances=0 --max-instances=1 --cpu-boost"
 
           env_vars: |
             APP_ENV=${{ env.APP_ENV }}
@@ -62,6 +62,3 @@ jobs:
             TUYA_ACCESS_ID=${{ secrets.TUYA_ACCESS_ID }}
             TUYA_ACCESS_SECRET=${{ secrets.TUYA_ACCESS_SECRET }}
             DATABASE_URL=${{ secrets.DATABASE_URL }}
-
-          secrets: |
-            API_KEY=API_KEY:latest
