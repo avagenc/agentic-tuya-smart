@@ -25,8 +25,8 @@ func Load() (*Config, error) {
 			WriteTimeout: 10 * time.Second,
 			IdleTimeout:  120 * time.Second,
 		},
-		Security: &Security{},
-		Tuya:     &Tuya{},
+
+		Tuya: &Tuya{},
 		Database: &Database{
 			MaxConns:        20,
 			MinConns:        0,
@@ -41,10 +41,6 @@ func Load() (*Config, error) {
 
 	if err := cleanenv.ReadEnv(cfg.Server); err != nil {
 		return nil, fmt.Errorf("failed to load server config: %w", err)
-	}
-
-	if err := cleanenv.ReadEnv(cfg.Security); err != nil {
-		return nil, fmt.Errorf("failed to load security config: %w", err)
 	}
 
 	if err := cleanenv.ReadEnv(cfg.Tuya); err != nil {

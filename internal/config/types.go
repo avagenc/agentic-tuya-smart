@@ -3,9 +3,9 @@ package config
 import "time"
 
 type Config struct {
-	App      *App
-	Server   *Server
-	Security *Security
+	App    *App
+	Server *Server
+
 	Tuya     *Tuya
 	Database *Database
 }
@@ -21,10 +21,6 @@ type Server struct {
 	ReadTimeout  time.Duration `env:"SERVER_READ_TIMEOUT"`
 	WriteTimeout time.Duration `env:"SERVER_WRITE_TIMEOUT"`
 	IdleTimeout  time.Duration `env:"SERVER_IDLE_TIMEOUT"`
-}
-
-type Security struct {
-	APIKey string `env:"API_KEY" env-required:"true"`
 }
 
 type Tuya struct {

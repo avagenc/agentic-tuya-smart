@@ -85,7 +85,6 @@ func main() {
 	r.Use(chiMiddleware.RealIP)
 	r.Use(chiMiddleware.Logger)
 	r.Use(chiMiddleware.Recoverer)
-	r.Use(middleware.AuthenticateAPIKey(cfg.Security.APIKey))
 
 	r.Get("/", hdl.system.Index)
 
