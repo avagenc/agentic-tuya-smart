@@ -22,20 +22,20 @@ func NewHandler(svc Service) *Handler {
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	ownerID, err := api.GetUserIDFromContext(r.Context())
 	if err != nil {
-		api.Respond(w, http.StatusUnauthorized, api.NewErrorResponse("UNAUTHORIZED", "Missing user identity", nil))
+		api.WriteError(w, api.NewError(http.StatusUnauthorized, "UNAUTHORIZED", "Missing user identity"))
 		return
 	}
 
 	acc, err := h.svc.Get(r.Context(), ownerID)
 	if err != nil {
-		api.Respond(w, http.StatusNotFound, api.NewErrorResponse("NOT_FOUND", "Tuya account not linked", nil))
+		api.WriteError(w, api.NewError(http.StatusNotFound, "NOT_FOUND", "Tuya account not linked"))
 		return
 	}
 
-	api.Respond(w, http.StatusOK, api.NewSuccessResponse("Account retrieved", map[string]any{
+	api.WriteSuccess(w, http.StatusOK, "SUCCESS", "Account retrieved", map[string]any{
 		"ownerId":   acc.OwnerID,
 		"tuyaUid":   acc.TuyaUID,
 		"createdAt": acc.CreatedAt,
 		"updatedAt": acc.UpdatedAt,
-	}, nil))
+	}, nil)
 }
