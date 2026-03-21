@@ -21,7 +21,7 @@ func NewTuyaIoTClient(client TuyaClient) TuyaIoTClient {
 }
 
 func (c *tuyaIoTClient) List(tuyaUID string) ([]domain.Device, error) {
-	path := fmt.Sprintf("%s/%s/devices", domain.TuyaUserEndpoint, tuyaUID)
+	path := fmt.Sprintf("/v1.0/users/%s/devices", tuyaUID)
 	result, err := c.client.Do(http.MethodGet, path, nil)
 	if err != nil {
 		return nil, err
@@ -36,7 +36,7 @@ func (c *tuyaIoTClient) List(tuyaUID string) ([]domain.Device, error) {
 }
 
 func (c *tuyaIoTClient) SendCommands(deviceID string, commands any) (json.RawMessage, error) {
-	path := fmt.Sprintf("%s/%s/commands", domain.TuyaDevicesEndpoint, deviceID)
+	path := fmt.Sprintf("/v1.0/iot-03/devices/%s/commands", deviceID)
 	bodyBytes, err := json.Marshal(struct {
 		Commands any `json:"commands"`
 	}{
@@ -50,6 +50,6 @@ func (c *tuyaIoTClient) SendCommands(deviceID string, commands any) (json.RawMes
 }
 
 func (c *tuyaIoTClient) GetMultiChannelName(deviceID string) (json.RawMessage, error) {
-	path := fmt.Sprintf("%s/%s/multiple-names", domain.TuyaDevicesEndpoint, deviceID)
+	path := fmt.Sprintf("/v1.0/devices/%s/multiple-names", deviceID)
 	return c.client.Do(http.MethodGet, path, nil)
 }

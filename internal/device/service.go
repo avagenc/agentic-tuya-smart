@@ -43,7 +43,7 @@ func (s *service) List(ctx context.Context, userID string) ([]domain.Device, err
 	}
 
 	if err := s.enrichDevices(devices); err != nil {
-		fmt.Printf("Warning: %v\n", err)
+		return nil, fmt.Errorf("failed to enrich devices: %w", err)
 	}
 
 	return devices, nil
