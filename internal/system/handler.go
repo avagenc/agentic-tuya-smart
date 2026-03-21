@@ -33,5 +33,5 @@ func (h *Handler) Index(w http.ResponseWriter, r *http.Request) {
 		Version:     h.version,
 	}
 
-	api.Respond(w, http.StatusOK, api.NewSuccessResponse("Service is healthy", data, nil))
+	api.WriteSuccess(w, http.StatusOK, "SUCCESS", "Service is healthy", data, nil)
 }
