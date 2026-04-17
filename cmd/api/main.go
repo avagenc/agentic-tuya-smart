@@ -8,9 +8,9 @@ import (
 	"github.com/avagenc/zee-api/internal/account"
 	"github.com/avagenc/zee-api/internal/config"
 	"github.com/avagenc/zee-api/internal/device"
-	"github.com/avagenc/zee-api/internal/postgres"
 	"github.com/avagenc/zee-api/internal/system"
 	"github.com/avagenc/zee-api/internal/tuya"
+	"github.com/avagenc/zee-api/internal/zeedb"
 	"github.com/go-chi/chi/v5"
 	chiMiddleware "github.com/go-chi/chi/v5/middleware"
 	"go.naturallyfunny.dev/api/identity"
@@ -22,7 +22,7 @@ func main() {
 		log.Fatalf("FATAL: %v", err)
 	}
 
-	pgPool, err := postgres.NewPool(
+	pgPool, err := zeedb.NewPool(
 		cfg.Database.URL,
 		cfg.Database.MaxConns,
 		cfg.Database.MinConns,
@@ -34,7 +34,7 @@ func main() {
 	}
 	defer pgPool.Close()
 
-	if err := postgres.ValidateSchema(context.Background(), pgPool); err != nil {
+	if err := zeedb.ValidateSchema(context.Background(), pgPool); err != nil {
 		log.Fatalf("FATAL: Schema validation failed: %v", err)
 	}
 
