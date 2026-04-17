@@ -4,7 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/avagenc/zee-api/pkg/api"
+	"go.naturallyfunny.dev/api"
+	"go.naturallyfunny.dev/api/identity"
 )
 
 type Service interface {
@@ -20,7 +21,7 @@ func NewHandler(svc Service) *Handler {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	ownerID, err := api.GetUserIDFromContext(r.Context())
+	ownerID, err := identity.GetUserIDFromContext(r.Context())
 	if err != nil {
 		api.WriteError(w, api.NewError(http.StatusUnauthorized, "UNAUTHORIZED", "Missing user identity"))
 		return
