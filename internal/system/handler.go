@@ -3,7 +3,7 @@ package system
 import (
 	"net/http"
 
-	"github.com/avagenc/zee-api/pkg/api"
+	"go.naturallyfunny.dev/api"
 )
 
 type Handler struct {

@@ -8,12 +8,12 @@ import (
 	"github.com/avagenc/zee-api/internal/account"
 	"github.com/avagenc/zee-api/internal/config"
 	"github.com/avagenc/zee-api/internal/device"
-	"github.com/avagenc/zee-api/internal/middleware"
 	"github.com/avagenc/zee-api/internal/postgres"
 	"github.com/avagenc/zee-api/internal/system"
 	"github.com/avagenc/zee-api/internal/tuya"
 	"github.com/go-chi/chi/v5"
 	chiMiddleware "github.com/go-chi/chi/v5/middleware"
+	"go.naturallyfunny.dev/api/identity"
 )
 
 func main() {
@@ -89,7 +89,7 @@ func main() {
 	r.Get("/", hdl.system.Index)
 
 	r.Group(func(r chi.Router) {
-		r.Use(middleware.RequireUserIdentity)
+		r.Use(identity.RequireUserID)
 
 		r.Get("/account", hdl.account.Get)
 		r.Get("/devices", hdl.device.List)
