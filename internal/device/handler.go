@@ -28,33 +28,33 @@ func NewHandler(svc Service) *Handler {
 func (h *Handler) List(w http.ResponseWriter, r *http.Request) {
 	userID, err := identity.GetUserIDFromContext(r.Context())
 	if err != nil {
-		api.WriteError(w, api.NewError(http.StatusUnauthorized, "UNAUTHORIZED", "Missing user identity"))
+		api.WriteError(w, api.NewError(api.Unauthenticated, "Missing user identity"))
 		return
 	}
 
 	devices, err := h.svc.List(r.Context(), userID)
 	if err != nil {
 		if errors.Is(err, domain.ErrAccountNotLinked) {
-			api.WriteError(w, api.NewError(http.StatusUnauthorized, "UNAUTHORIZED", "No Tuya App Account is linked to the user"))
+			api.WriteError(w, api.NewError(api.Unauthenticated, "No Tuya App Account is linked to the user"))
 			return
 		}
-		api.WriteError(w, api.NewError(http.StatusBadGateway, "UPSTREAM_ERROR", err.Error()).WithError(err))
+		api.WriteError(w, api.NewError(api.Unavailable, err.Error()).WithError(err))
 		return
 	}
 
-	api.WriteSuccess(w, http.StatusOK, "SUCCESS", "Devices retrieved successfully", devices, nil)
+	api.WriteSuccess(w, api.OK, "Devices retrieved successfully", devices, nil)
 }
 
 func (h *Handler) SendCommands(w http.ResponseWriter, r *http.Request) {
 	userID, err := identity.GetUserIDFromContext(r.Context())
 	if err != nil {
-		api.WriteError(w, api.NewError(http.StatusUnauthorized, "UNAUTHORIZED", "Missing user identity"))
+		api.WriteError(w, api.NewError(api.Unauthenticated, "Missing user identity"))
 		return
 	}
 
 	deviceID := chi.URLParam(r, "deviceId")
 	if deviceID == "" {
-		api.WriteError(w, api.NewError(http.StatusBadRequest, "INVALID_REQUEST", "Missing deviceId"))
+		api.WriteError(w, api.NewError(api.InvalidArgument, "Missing deviceId"))
 		return
 	}
 
@@ -63,28 +63,28 @@ func (h *Handler) SendCommands(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		api.WriteError(w, api.NewError(http.StatusBadRequest, "INVALID_REQUEST", "Invalid request body"))
+		api.WriteError(w, api.NewError(api.InvalidArgument, "Invalid request body"))
 		return
 	}
 
 	if len(req.Commands) == 0 {
-		api.WriteError(w, api.NewError(http.StatusBadRequest, "INVALID_REQUEST", "Commands cannot be empty"))
+		api.WriteError(w, api.NewError(api.InvalidArgument, "Commands cannot be empty"))
 		return
 	}
 
 	result, err := h.svc.SendCommands(r.Context(), userID, deviceID, req.Commands)
 	if err != nil {
 		if errors.Is(err, domain.ErrAccountNotLinked) {
-			api.WriteError(w, api.NewError(http.StatusUnauthorized, "UNAUTHORIZED", "No Tuya App Account is linked to the user"))
+			api.WriteError(w, api.NewError(api.Unauthenticated, "No Tuya App Account is linked to the user"))
 			return
 		}
 		if errors.Is(err, domain.ErrDeviceNotOwned) {
-			api.WriteError(w, api.NewError(http.StatusForbidden, "FORBIDDEN", "Device does not belong to user"))
+			api.WriteError(w, api.NewError(api.PermissionDenied, "Device does not belong to user"))
 			return
 		}
-		api.WriteError(w, api.NewError(http.StatusBadGateway, "UPSTREAM_ERROR", err.Error()).WithError(err))
+		api.WriteError(w, api.NewError(api.Unavailable, err.Error()).WithError(err))
 		return
 	}
 
-	api.WriteSuccess(w, http.StatusOK, "SUCCESS", "Commands sent successfully", result, nil)
+	api.WriteSuccess(w, api.OK, "Commands sent successfully", result, nil)
 }

@@ -35,6 +35,10 @@ github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu
 github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
 go.naturallyfunny.dev/api v1.2.0 h1:2uAIyHKvVL0iVfdlslxhFEpFuJZHfWZzmUQwEHYcEtw=
 go.naturallyfunny.dev/api v1.2.0/go.mod h1:l8a+fA+ze+Y7m+QE0w6e8wyh/N3pvvE90R1WEqDMGYM=
+go.naturallyfunny.dev/api v1.5.0 h1:T/QEsjv+7sssDe2H1hShRVGMmMx4q2OUc48uWvdnnZQ=
+go.naturallyfunny.dev/api v1.5.0/go.mod h1:l8a+fA+ze+Y7m+QE0w6e8wyh/N3pvvE90R1WEqDMGYM=
+go.naturallyfunny.dev/api v1.5.1 h1:7aij/TEuXpLHpsgs68+6/7fEp9sxKrE52BbAQkF3Buw=
+go.naturallyfunny.dev/api v1.5.1/go.mod h1:l8a+fA+ze+Y7m+QE0w6e8wyh/N3pvvE90R1WEqDMGYM=
 golang.org/x/sync v0.17.0 h1:l60nONMj9l5drqw6jlhIELNv9I0A4OFgRsG9k2oT9Ug=
 golang.org/x/sync v0.17.0/go.mod h1:9KTHXmSnoGruLpwFjVSX0lNNA75CykiMECbovNTZqGI=
 golang.org/x/text v0.29.0 h1:1neNs90w9YzJ9BocxfsQNHKuAT4pkghyXc4nhZ6sJvk=

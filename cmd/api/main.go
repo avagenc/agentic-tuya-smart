@@ -89,7 +89,7 @@ func main() {
 	r.Get("/", hdl.system.Index)
 
 	r.Group(func(r chi.Router) {
-		r.Use(identity.RequireUserID)
+		r.Use(identity.WithUserID)
 
 		r.Get("/account", hdl.account.Get)
 		r.Get("/devices", hdl.device.List)
