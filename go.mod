@@ -7,7 +7,7 @@ require (
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/jackc/pgx/v5 v5.8.0
 	github.com/joho/godotenv v1.5.1
-	go.naturallyfunny.dev/api v1.2.0
+	go.naturallyfunny.dev/api v1.5.1
 )
 
 require (
